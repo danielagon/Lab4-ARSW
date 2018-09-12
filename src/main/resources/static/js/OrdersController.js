@@ -27,7 +27,6 @@ function addOrder(){
 
     axios.post('/orders',order)
         .then(function(){
-                loadOrders();
             console.log("Aggregate order");
         })    
         .catch(function(error){
@@ -92,7 +91,7 @@ function loadOrders(){
 }
 
 function removeOrderById(id){
-    axios.delete('/orders/'+id)
+    axios.delete('/orders',id)
         .then(function (){
             document.getElementById("Table"+id).remove();
         })
