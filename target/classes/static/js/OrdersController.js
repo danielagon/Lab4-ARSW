@@ -91,7 +91,7 @@ function loadOrders(){
 }
 
 function removeOrderById(id){
-    axios.delete('/orders',id)
+    axios.delete('/orders/'+id)
         .then(function (){
             document.getElementById("Table"+id).remove();
         })
