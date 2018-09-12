@@ -20,25 +20,47 @@ var order2 = {
 	]
 };
 
-function addOrder(order){
+var orders = [];
+
+function addOrder(){
+    var order = {"orderAmountsMap":{"HAMBURGER":4,"COKE":4},"tableNumber":2};
+
+    axios.post('/orders',order)
+        .then(function(){
+                loadOrders();
+            console.log("Aggregate order");
+        })    
+        .catch(function(error){
+            console.log(error);
+            alert("There is a problem with our servers. We apologize for the inconvince, please try again later");
+        });
+        window.location.reload();
+}
         
-        axios.post('/orders',order)
-            .then(function(){
-                
+function loadOrders(){
+    
+    axios.get('/orders')
+        .then(function (response){
+            orders = response.data;
+    
+            for (j in orders){
+    
+                var dvTable = document.getElementById("Tables");
+
                 var header = new Array();
-                header.push("Product");
-                header.push("Quantity");
-                header.push("Price");
+                    header.push("Product");
+                    header.push("Quantity");
+                    header.push("Price");
 
                 var table = document.createElement("Table");
                 table.border = "1";
-                table.setAttribute("id","Table"+order.table_id);
+                table.setAttribute("id","Table"+j);
 
                 var column = 3;
                 var row = table.insertRow(-1);
                 var headerTable = document.createElement("th");
                 headerTable.setAttribute("colspan","3");
-                headerTable.innerHTML = "Order "+order.table_id;
+                headerTable.innerHTML = "Order "+j;
                 row.appendChild(headerTable);
 
                 var row = table.insertRow(-1);
@@ -48,52 +70,36 @@ function addOrder(order){
                     row.appendChild(headerCell);
                 }
 
-                for (var i=0;i<order.products.length;i++){
+                for (var i=0;i<Object.keys(orders[j].orderAmountsMap).length;i++){
                     row = table.insertRow(-1);
                     var cell = row.insertCell(-1);
-                    cell.innerHTML = order.products[i].product;
+                    cell.innerHTML = Object.keys(orders[j].orderAmountsMap)[i];
                     var cell = row.insertCell(-1);
-                    cell.innerHTML = order.products[i].quantity;
+                    cell.innerHTML = orders[j].orderAmountsMap[Object.keys(orders[j].orderAmountsMap)[i]];
+                    /*
                     var cell = row.insertCell(-1);
-                    cell.innerHTML = order.products[i].price;
+                    cell.innerHTML = orders.products[i].price;*/
                 }
 
-                var dvTable = document.getElementById("dvTables");
                 dvTable.appendChild(document.createElement("br"));
                 dvTable.appendChild(table);
-            })    
-            .catch(function(error){
-                console.log("Error",error.message);
-            });
-}
-        
-function loadOrders(){
-    //addOrder(order2);
-
-    //const axios = require('axios');
-    axios.get("/orders")
-        .then(function (response){
-            var orders = response.data;
-            for (var i=0;i<orders.length;i++){
-                addOrder(orders[i]);
             }
         })
         .catch(function (error){
-            console.log("Error",error.message);
+            console.log(error);
+            alert("There is a problem with our servers. We apologize for the inconvince, please try again later");
         });
 }
 
 function removeOrderById(id){
+    
     axios.delete('/orders/'+id)
         .then(function (){
-            var order = document.getElementById(id);
-            if (order){
-                order.parendNode.removeChild(order);
-            }
+            document.getElementById("Table"+id).remove();
         })
         .catch(function(error){
-            console.log("Error",error.message);
+            console.log(error);
+            alert("There is a problem with our servers. We apologize for the inconvince, please try again later");
         });
 }
-
 

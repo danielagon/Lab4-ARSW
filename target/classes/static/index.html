@@ -23,15 +23,16 @@
         <div class="inner">
           <!--h3 class="masthead-brand">Cover</h3-->
           <nav class="nav nav-masthead justify-content-center">
-            <a class="nav-link active">Orders</a>
-            <a class="nav-link">New order</a>
+            <a class="nav-link active" href="#" onclick="loadOrders()">Orders</a>
+            <a class="nav-link" href="#" onclick="addOrder()">New order</a>
+            <a class="nav-link" href="#" onclick="removeOrderById(2)">Delete order</a>
             <!--a class="nav-link" href="https://getbootstrap.com/docs/4.0/examples/cover/#">Contact</a-->
           </nav>
         </div>
       </header>
 
-      <main role="main" class="inner cover">
-        <h1 class="cover-heading">Orders</h1>
+      <main role="main" class="inner cover" id="Tables">
+        <!--h1 class="cover-heading">Orders</h1-->
         <!--table border="1">
             <thead>
                 <tr>
@@ -61,7 +62,6 @@
             </tr>
             </tbody>
 	</table-->
-        <div id="dvTables"></div>
       </main>
 
       <footer class="mastfoot mt-auto">
