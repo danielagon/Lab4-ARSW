@@ -52,7 +52,7 @@ function loadOrders(){
                     header.push("Quantity");
                     header.push("Price");
 
-                var table = document.createElement("Table");
+                var table = document.createElement("table");
                 table.border = "1";
                 table.setAttribute("id","Table"+j);
 
@@ -92,7 +92,6 @@ function loadOrders(){
 }
 
 function removeOrderById(id){
-    
     axios.delete('/orders/'+id)
         .then(function (){
             document.getElementById("Table"+id).remove();

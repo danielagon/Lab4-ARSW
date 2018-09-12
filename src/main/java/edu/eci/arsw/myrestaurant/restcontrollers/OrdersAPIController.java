@@ -111,8 +111,8 @@ public class OrdersAPIController {
         }
     }
     
-    @RequestMapping(method = RequestMethod.DELETE)
-    public ResponseEntity<?> manejadorDeleteOrders(@RequestBody int idmesa){
+    @RequestMapping(method = RequestMethod.DELETE, path = "{idmesa}")
+    public ResponseEntity<?> manejadorDeleteOrders(@PathVariable int idmesa){
         try{
             orders.releaseTable(idmesa);
             return new ResponseEntity<>(HttpStatus.ACCEPTED);
